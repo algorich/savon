@@ -23,7 +23,7 @@ module Savon
     end
 
     attr_reader :local_header, :global_header, :gyoku_options,
-                :wsse_auth, :wsse_timestamp, :wsse_signature
+                :wsse_auth, :wsse_expire_in, :wsse_timestamp, :wsse_signature
 
     def empty?
       @header.empty?

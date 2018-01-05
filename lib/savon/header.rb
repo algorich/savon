@@ -10,6 +10,7 @@ module Savon
 
       @wsse_auth      = locals[:wsse_auth].nil? ? globals[:wsse_auth] : locals[:wsse_auth]
       @wsse_timestamp = locals[:wsse_timestamp].nil? ? globals[:wsse_timestamp] : locals[:wsse_timestamp]
+      @wsse_expire_in = locals[:wsse_expire_in].nil? ? globals[:wsse_expire_in] : locals[:wsse_expire_in]
       @wsse_signature = locals[:wsse_signature].nil? ? globals[:wsse_signature] : locals[:wsse_signature]
 
       @global_header  = globals[:soap_header]
@@ -82,6 +83,12 @@ module Savon
       wsse = Akami.wsse
       wsse.credentials(*wsse_auth) if wsse_auth
       wsse.timestamp = wsse_timestamp if wsse_timestamp
+
+      if wsse_expire_in && !wsse_timestamp
+        wsse.created_at = Time.current
+        wsse.expires_at = Time.current + wsse_expire_in
+      end
+
       if wsse_signature && wsse_signature.have_document?
         wsse.signature = wsse_signature
       end

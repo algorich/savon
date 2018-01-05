@@ -64,6 +64,10 @@ module Savon
     def wsse_signature(signature)
       @options[:wsse_signature] = signature
     end
+
+    def wsse_expire_in(duration = 30)
+      @options[:wsse_expire_in] = duration
+    end
   end
 
   class GlobalOptions < Options
